@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
