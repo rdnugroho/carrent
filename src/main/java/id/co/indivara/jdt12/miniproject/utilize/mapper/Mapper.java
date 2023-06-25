@@ -3,8 +3,6 @@ package id.co.indivara.jdt12.miniproject.utilize.mapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import id.co.indivara.jdt12.miniproject.entity.Customer;
-import jdk.internal.org.objectweb.asm.TypeReference;
 
 import java.util.ArrayList;
 import java.util.List;

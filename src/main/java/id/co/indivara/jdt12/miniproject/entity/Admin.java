@@ -17,7 +17,6 @@ import java.util.List;
 public class Admin {
     @Id
     private Long id;
-
     @Size(max = 50, message = "nomor nik maksimal 50")
     @Column(unique = true)
     private String nik;

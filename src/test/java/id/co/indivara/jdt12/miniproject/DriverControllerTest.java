@@ -1,8 +1,10 @@
 package id.co.indivara.jdt12.miniproject;
 
-import id.co.indivara.jdt12.miniproject.controller.VehicleController;
-import id.co.indivara.jdt12.miniproject.entity.Vehicle;
-import id.co.indivara.jdt12.miniproject.service.VehicleService;
+
+import id.co.indivara.jdt12.miniproject.controller.DriverController;
+import id.co.indivara.jdt12.miniproject.entity.Driver;
+
+import id.co.indivara.jdt12.miniproject.service.DriverService;
 import id.co.indivara.jdt12.miniproject.utilize.mapper.Mapper;
 import id.co.indivara.jdt12.miniproject.utilize.response.ResponseMessage;
 import org.junit.Test;
@@ -21,97 +23,91 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-public class VehicleTestController {
+public class DriverControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private VehicleController vehicleController;
+    private DriverController driverController;
     @Autowired
-    private VehicleService vehicleService;
-
+    private DriverService driverService;
     @Test
-    public void getAllVehicleTesting() throws Exception{
-        List<Vehicle>vehicleCheck = vehicleService.getAll();
+    public void getAllDriverTesting() throws Exception{
+        List<Driver>driversCheck = driverService.getAll();
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/vehicle/")
-                .accept(MediaType.APPLICATION_JSON)
-        ).andDo(result -> {
-            List<Vehicle> vehicles = Mapper.getAllData(result.getResponse().getContentAsString(), Vehicle.class);
-            Assertions.assertNotNull(vehicles);
-            Assertions.assertEquals(vehicleCheck.get(0).getName(), vehicles.get(0).getName());
-        }).andExpect(status().isOk())
+                        .get("/api/driver/")
+                        .accept(MediaType.APPLICATION_JSON)
+                ).andDo(result -> {
+                    List<Driver> drivers = Mapper.getAllData(result.getResponse().getContentAsString(), Driver.class);
+                    Assertions.assertNotNull(drivers);
+                    Assertions.assertEquals(driversCheck.get(0).getName(), drivers.get(0).getName());
+                }).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNotEmpty());
     }
     @Test
-    public void getVehicleById() throws Exception {
-        Vehicle vehicle = vehicleService.findById(1L);
+    public void getDriverById() throws Exception {
+        Driver driver = driverService.findById(1L);
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/api/vehicle/1")
-                .accept(MediaType.APPLICATION_JSON))
+                        .get("/api/driver/1")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andDo(result -> {
-                    Vehicle vehicles = Mapper.getData(result.getResponse().getContentAsString(), Vehicle.class);
-                    Assertions.assertNotNull(vehicles);
-                    Assertions.assertEquals(vehicle.getName(),vehicles.getName());
+                    Driver drivers = Mapper.getData(result.getResponse().getContentAsString(), Driver.class);
+                    Assertions.assertNotNull(driver);
+                    Assertions.assertEquals(driver.getName(),driver.getName());
                 })
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
     }
     @Test
-    public void updateVehicle() throws Exception {
-        Vehicle vehicle = vehicleService.findById(1L);
+    public void updateDriver() throws Exception {
+        Driver driver = driverService.findById(3L);
         mockMvc.perform(MockMvcRequestBuilders
-                .put("/api/vehicle/1")
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Mapper.toJson(vehicle))
-        )
+                        .put("/api/driver/3")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Mapper.toJson(driver))
+                )
                 .andDo(result -> {
-                    Vehicle vehicles = Mapper.getData(result.getResponse().getContentAsString(), Vehicle.class);
-                    Assertions.assertNotNull(vehicles);
-                    Assertions.assertEquals(vehicles.getName(),vehicle.getName());
+                    Driver drivers = Mapper.getData(result.getResponse().getContentAsString(), Driver.class);
+                    Assertions.assertNotNull(drivers);
+                    Assertions.assertEquals(drivers.getName(),drivers.getName());
                 })
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
     }
     @Test
-    public void addAndDeleteVehicle() throws Exception {
-        Vehicle vehicle = Vehicle.builder()
-                .name("lamborghini")
-                .baggage(1)
-                .level(1)
-                .plate("B 1004 JT")
-                .year(2020)
-                .seat(2)
-                .isAvailable(true)
-                .costPerHour(BigDecimal.valueOf(100000.0))
+    public void addAndDeleteDriver() throws Exception {
+        Driver driver = Driver.builder()
+                .nik("87623127252")
+                .name("Alexander")
+                .address("Kalimalang Jl.KH Noer Ali")
+                .email("younglex21@gmail.com")
+                .phoneNumber("081923444214")
                 .build();
         mockMvc.perform(MockMvcRequestBuilders
-                .post("/api/vehicle")
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(Mapper.toJson(vehicle))
-        ).andDo(result -> {
-                    Vehicle vehicles = Mapper.getData(result.getResponse().getContentAsString(), Vehicle.class);
-                    Assertions.assertNotNull(vehicles);
-                    Assertions.assertEquals(vehicles.getName(),vehicle.getName());
-                    deleteVehicle(vehicles.getId());
+                        .post("/api/driver")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(Mapper.toJson(driver))
+                ).andDo(result -> {
+                    Driver drivers = Mapper.getData(result.getResponse().getContentAsString(), Driver.class);
+                    Assertions.assertNotNull(drivers);
+                    Assertions.assertEquals(drivers.getName(),drivers.getName());
+                    deleteDriver( drivers.getId());
                 })
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
     }
-    public void deleteVehicle(Long id) throws Exception {
+    public void deleteDriver(Long id) throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/vehicle/"+id)
+                        .delete("/api/driver/"+id)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -124,5 +120,5 @@ public class VehicleTestController {
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").isNotEmpty());
     }
-}
 
+}
