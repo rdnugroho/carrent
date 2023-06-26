@@ -51,6 +51,7 @@ public class CustomerControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNotEmpty());
     }
+    //untuk testing id customers
     @Test
     public void getCustomerById() throws Exception {
        Customer customer = customerService.findById(2L);
