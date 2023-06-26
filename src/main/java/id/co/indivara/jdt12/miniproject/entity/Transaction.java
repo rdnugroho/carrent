@@ -1,5 +1,6 @@
 package id.co.indivara.jdt12.miniproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,9 +27,9 @@ public class Transaction {
     @JoinColumn(name = "id")
     private Rent rent;
 
-
+    @JsonFormat(pattern = "dd-mm-yyyy HH:mm:ss", timezone = "Asia/Singapore")
     private Date startDate;
-
+    @JsonFormat(pattern = "dd-mm-yyyy HH:mm:ss", timezone = "Asia/Singapore")
     private Date endRent;
 
     private Integer duration;
