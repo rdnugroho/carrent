@@ -41,6 +41,7 @@ private Long id;
     @ManyToOne
     @JoinColumn(name = "driver")
     private Driver driver;
+
     private Boolean isCurrentlyRented;
 }
 

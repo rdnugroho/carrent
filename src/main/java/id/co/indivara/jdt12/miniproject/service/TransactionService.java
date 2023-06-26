@@ -5,6 +5,7 @@ import id.co.indivara.jdt12.miniproject.entity.Rent;
 import id.co.indivara.jdt12.miniproject.entity.Transaction;
 import id.co.indivara.jdt12.miniproject.entity.Vehicle;
 import id.co.indivara.jdt12.miniproject.error.FinishingTheRentException;
+import id.co.indivara.jdt12.miniproject.repo.DriverRepository;
 import id.co.indivara.jdt12.miniproject.repo.RentRepository;
 import id.co.indivara.jdt12.miniproject.repo.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,10 @@ public class TransactionService extends GenericService <Transaction> {
             driver.setIsAvailable(true);
             driver.setCountOfRented(driver.getCountOfRented() + 1);
             rent.setDriver(driver);
+            BigDecimal totalDriverCost = driver.getCostPerHour().multiply(BigDecimal.valueOf(totalHours));
+            transaction.setDriverCost(totalDriverCost);
         }
+
 
         vehicle.setIsAvailable(true);
         rent.setIsCurrentlyRented(false);
@@ -70,13 +74,17 @@ public class TransactionService extends GenericService <Transaction> {
 
         return transactionRepository.save(transaction);
     }
-    public List<Transaction> findAllTransactionByDriverId(Long id){
-        return this.getAll().stream().filter(transaction -> transaction.getRent().getDriver().getId() == id).collect(Collectors.toList());
-    }
+
     public List<Transaction> findAllTransaction() {
         return transactionRepository.findAll();
     }
     public List<Transaction> findAllTransactionByCustomerId(Long id){
         return this.getAll().stream().filter(transaction -> transaction.getRent().getCustomer().getId() == id).collect(Collectors.toList());
     }
+    public List<Transaction> findAllTransactionByDriverId(Long id){
+        return this.getAll().stream().filter(transaction -> transaction.getRent().getDriver().getId() == id).collect(Collectors.toList());
+    }
+//    public List<Transaction> findAllTransactionByDriverId(Long id){
+//        return transactionRepository.findAllTransactionByDriverId(id);
+//    }
 }

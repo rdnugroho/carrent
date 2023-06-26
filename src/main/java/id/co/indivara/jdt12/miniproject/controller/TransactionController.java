@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/transaction")
-public class TransactionController {
+public class TransactionController extends GenericController <Transaction>{
     @Autowired
     private TransactionService transactionService;
 
@@ -29,7 +29,9 @@ public class TransactionController {
     }
     @GetMapping("/driver/{id}")
     public ResponseEntity<List<Transaction>> findAllTransactionByDriverId(@PathVariable Long id) {
+        System.out.println(id);
         List<Transaction> transactions = transactionService.findAllTransactionByDriverId(id);
+        System.out.println(transactions);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
     @GetMapping("/customer/{id}")

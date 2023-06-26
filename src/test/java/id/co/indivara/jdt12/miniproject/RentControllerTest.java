@@ -3,6 +3,7 @@ package id.co.indivara.jdt12.miniproject;
 import id.co.indivara.jdt12.miniproject.controller.RentController;
 
 import id.co.indivara.jdt12.miniproject.entity.Rent;
+import id.co.indivara.jdt12.miniproject.entity.Rent;
 import id.co.indivara.jdt12.miniproject.service.RentService;
 
 import id.co.indivara.jdt12.miniproject.utilize.mapper.Mapper;
@@ -48,4 +49,20 @@ public class RentControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNotEmpty());
     }
+    @Test
+    public void getRentById() throws Exception {
+        Rent rent = rentService.findById(4L);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/rent/1")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(result -> {
+                    Rent rents = Mapper.getData(result.getResponse().getContentAsString(), Rent.class);
+                    Assertions.assertNotNull(rent);
+                    Assertions.assertEquals(rent.getId(),rent.getId());
+                })
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty());
+    }
+
 }
