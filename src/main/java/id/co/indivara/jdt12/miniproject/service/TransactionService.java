@@ -5,16 +5,13 @@ import id.co.indivara.jdt12.miniproject.entity.Rent;
 import id.co.indivara.jdt12.miniproject.entity.Transaction;
 import id.co.indivara.jdt12.miniproject.entity.Vehicle;
 import id.co.indivara.jdt12.miniproject.error.FinishingTheRentException;
-import id.co.indivara.jdt12.miniproject.repo.DriverRepository;
 import id.co.indivara.jdt12.miniproject.repo.RentRepository;
 import id.co.indivara.jdt12.miniproject.repo.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -89,7 +86,17 @@ public class TransactionService extends GenericService <Transaction> {
         return this.getAll().stream().filter(transaction -> transaction.getRent().getCustomer().getId() == id).collect(Collectors.toList());
     }
     public List<Transaction> findAllTransactionByDriverId(Long id){
-        return this.getAll().stream().filter(transaction -> transaction.getRent().getDriver().getId() == id).collect(Collectors.toList());
+        List<Transaction> transactions = new ArrayList<>();
+        try{
+            for(Transaction t : getAll()){
+                if (t.getRent().getDriver() != null) transactions.add(t);
+            }
+            transactions = transactions.stream().filter(transaction -> transaction.getRent().getDriver().getId() == id).collect(Collectors.toList());
+        } catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return transactions;
+
     }
 //    public List<Transaction> findAllTransactionByDriverId(Long id){
 //        return transactionRepository.findAllTransactionByDriverId(id);

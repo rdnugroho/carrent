@@ -26,10 +26,14 @@ public class TransactionController extends GenericController <Transaction>{
     }
     @GetMapping("/driver/{id}")
     public ResponseEntity<List<Transaction>> findAllTransactionByDriverId(@PathVariable Long id) {
-        System.out.println(id);
+        if (id != null) {
         List<Transaction> transactions = transactionService.findAllTransactionByDriverId(id);
         System.out.println(transactions);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
+        }
+        else{
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @GetMapping("/customer/{id}")
     public ResponseEntity<List<Transaction>> findAllTransactionByCustomerId(@PathVariable Long id) {

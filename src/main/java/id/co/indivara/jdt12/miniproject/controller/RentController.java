@@ -2,7 +2,6 @@ package id.co.indivara.jdt12.miniproject.controller;
 import id.co.indivara.jdt12.miniproject.dto.RegRent;
 import id.co.indivara.jdt12.miniproject.entity.Rent;
 import id.co.indivara.jdt12.miniproject.service.RentService;
-import id.co.indivara.jdt12.miniproject.utilize.response.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

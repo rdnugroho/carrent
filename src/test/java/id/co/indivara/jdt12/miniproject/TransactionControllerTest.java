@@ -71,7 +71,7 @@ public class TransactionControllerTest {
                 .andDo(result -> {
                     Transaction transactions = Mapper.getData(result.getResponse().getContentAsString(), Transaction.class);
                     Assertions.assertNotNull(transaction);
-                    Assertions.assertEquals(transaction.getId(),transaction.getId());
+                    Assertions.assertEquals(transactions.getId(),transaction.getId());
                 })//transaction.getRent().getDriver().getId()
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())

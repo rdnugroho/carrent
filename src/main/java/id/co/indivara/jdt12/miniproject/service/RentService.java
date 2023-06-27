@@ -38,10 +38,13 @@ public class RentService extends GenericService<Rent> {
         Customer customer = customerService.findById(entity.getCustomerId());
         Vehicle vehicle = vehicleService.findById(entity.getVehicleId());
         Driver driver = driverService.getDriverByLevelandLowCount(vehicle.getLevel());
+
         vehicle.setIsAvailable(false);
+        driver.setIsAvailable(false);
         rent.setVehicle(vehicle);
         rent.setCustomer(customer);
         rent.setDriver(driver);
+
         transaction.setStartDate(new Date());
         transaction.setRent(rent);
         rent.setTransaction(transaction);
@@ -82,5 +85,6 @@ public class RentService extends GenericService<Rent> {
         vehicle.setIsAvailable(true);
         super.delete(id);
     }
+
 }
 

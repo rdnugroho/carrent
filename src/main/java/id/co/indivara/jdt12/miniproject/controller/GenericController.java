@@ -17,7 +17,6 @@ public class GenericController<T> {
     public ResponseEntity<List<T>> getAll() {
         return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<T> getById(@PathVariable Long id) {
         try {
@@ -29,9 +28,12 @@ public class GenericController<T> {
 
     @PostMapping
     public ResponseEntity<T> insert(@RequestBody T entity) {
-        return new ResponseEntity<>(service.save(entity), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(service.save(entity), HttpStatus.CREATED);
+        } catch (Exception e) {
+           return (ResponseEntity<T>) new ResponseEntity<>(new ResponseMessage(HttpStatus.BAD_REQUEST, "Data Sama"), HttpStatus.BAD_REQUEST);
+        }
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<T> update(@PathVariable Long id, @RequestBody T entity) {
         try {
