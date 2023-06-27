@@ -1,11 +1,11 @@
 package id.co.indivara.jdt12.miniproject;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import id.co.indivara.jdt12.miniproject.controller.CustomerController;
-import id.co.indivara.jdt12.miniproject.controller.VehicleController;
+
 import id.co.indivara.jdt12.miniproject.entity.Customer;
-import id.co.indivara.jdt12.miniproject.entity.Vehicle;
+import lombok.extern.slf4j.Slf4j;
 import id.co.indivara.jdt12.miniproject.service.CustomerService;
-import id.co.indivara.jdt12.miniproject.service.VehicleService;
 import id.co.indivara.jdt12.miniproject.utilize.mapper.Mapper;
 import id.co.indivara.jdt12.miniproject.utilize.response.ResponseMessage;
 import org.junit.Test;
@@ -20,11 +20,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.math.BigDecimal;
+
 import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
@@ -47,6 +48,8 @@ public class CustomerControllerTest {
                     List<Customer> customers = Mapper.getAllData(result.getResponse().getContentAsString(), Customer.class);
                     Assertions.assertNotNull(customers);
                     Assertions.assertEquals(customersCheck.get(0).getId(), customers.get(0).getId());
+                    log.info(result.getResponse().getContentAsString());
+
                 }).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNotEmpty());
@@ -62,6 +65,7 @@ public class CustomerControllerTest {
                     Customer customers = Mapper.getData(result.getResponse().getContentAsString(), Customer.class);
                     Assertions.assertNotNull(customer);
                     Assertions.assertEquals(customers.getId(),customer.getId());
+                    log.info(result.getResponse().getContentAsString());
                 })
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
@@ -80,6 +84,7 @@ public class CustomerControllerTest {
                     Customer customers = Mapper.getData(result.getResponse().getContentAsString(), Customer.class);
                     Assertions.assertNotNull(customers);
                     Assertions.assertEquals(customers.getId(),customer.getId());
+                    log.info(result.getResponse().getContentAsString());
                 })
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
@@ -100,6 +105,7 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Mapper.toJson(customer))
                 ).andDo(result -> {
+                    log.info(result.getResponse().getContentAsString());
                     Customer customers = Mapper.getData(result.getResponse().getContentAsString(), Customer.class);
                     Assertions.assertNotNull(customers);
                     Assertions.assertEquals(customers.getName(),customer.getName());
