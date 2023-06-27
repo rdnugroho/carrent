@@ -87,7 +87,7 @@ public class VehicleControllerTest {
                 .name("lamborghini")
                 .baggage(1)
                 .level(1)
-                .plate("B 1004 JT")
+                .plate("B 2307 POT")
                 .year(2020)
                 .seat(2)
                 .isAvailable(true)
@@ -98,10 +98,12 @@ public class VehicleControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Mapper.toJson(vehicle))
-        ).andDo(result -> {
+        )
+                .andDo(result -> {
+                    System.out.println(result.getResponse().getContentAsString());
                     Vehicle vehicles = Mapper.getData(result.getResponse().getContentAsString(), Vehicle.class);
                     Assertions.assertNotNull(vehicles);
-                    Assertions.assertEquals(vehicles.getId(),vehicle.getId());
+                  Assertions.assertEquals(vehicles.getPlate(),vehicle.getPlate());
                     deleteVehicle(vehicles.getId());
                 })
                 .andExpect(status().isCreated())

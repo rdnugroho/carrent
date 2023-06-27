@@ -57,7 +57,7 @@ public class CustomerControllerTest {
     //untuk testing id customers
     @Test
     public void getCustomerById() throws Exception {
-       Customer customer = customerService.findById(2L);
+        Customer customer = customerService.findById(2L);
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/customer/2")
                         .accept(MediaType.APPLICATION_JSON))
@@ -105,11 +105,11 @@ public class CustomerControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Mapper.toJson(customer))
                 ).andDo(result -> {
-                    log.info(result.getResponse().getContentAsString());
                     Customer customers = Mapper.getData(result.getResponse().getContentAsString(), Customer.class);
                     Assertions.assertNotNull(customers);
                     Assertions.assertEquals(customers.getName(),customer.getName());
                     deleteCustomer( customers.getId());
+                    log.info(result.getResponse().getContentAsString());
                 })
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
@@ -126,6 +126,7 @@ public class CustomerControllerTest {
                     ResponseMessage responseMessage = Mapper.getData(result.getResponse().getContentAsString(), ResponseMessage.class);
                     Assertions.assertNotNull(responseMessage);
                     Assertions.assertEquals("Data Berhasil Dihapus",responseMessage.getMessage());
+                    log.info(result.getResponse().getContentAsString());
                 })
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())

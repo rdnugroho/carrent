@@ -51,7 +51,7 @@ public class RentControllerTest {
     }
     @Test
     public void getRentById() throws Exception {
-        Rent rent = rentService.findById(4L);
+        Rent rent = rentService.findById(1L);
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/rent/1")
                         .accept(MediaType.APPLICATION_JSON))
