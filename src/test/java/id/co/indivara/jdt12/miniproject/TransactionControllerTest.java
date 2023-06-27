@@ -2,16 +2,10 @@ package id.co.indivara.jdt12.miniproject;
 
 
 import id.co.indivara.jdt12.miniproject.controller.TransactionController;
-
-import id.co.indivara.jdt12.miniproject.entity.Transaction;
 import id.co.indivara.jdt12.miniproject.entity.Transaction;
 import id.co.indivara.jdt12.miniproject.service.TransactionService;
-import id.co.indivara.jdt12.miniproject.entity.Driver;
-import id.co.indivara.jdt12.miniproject.service.DriverService;
-
-
 import id.co.indivara.jdt12.miniproject.utilize.mapper.Mapper;
-import id.co.indivara.jdt12.miniproject.utilize.response.ResponseMessage;
+
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;

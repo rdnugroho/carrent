@@ -46,7 +46,7 @@ public class CustomerControllerTest {
                 ).andDo(result -> {
                     List<Customer> customers = Mapper.getAllData(result.getResponse().getContentAsString(), Customer.class);
                     Assertions.assertNotNull(customers);
-                    Assertions.assertEquals(customersCheck.get(0).getName(), customers.get(0).getName());
+                    Assertions.assertEquals(customersCheck.get(0).getId(), customers.get(0).getId());
                 }).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNotEmpty());
@@ -61,7 +61,7 @@ public class CustomerControllerTest {
                 .andDo(result -> {
                     Customer customers = Mapper.getData(result.getResponse().getContentAsString(), Customer.class);
                     Assertions.assertNotNull(customer);
-                    Assertions.assertEquals(customer.getName(),customer.getName());
+                    Assertions.assertEquals(customers.getId(),customer.getId());
                 })
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
@@ -79,7 +79,7 @@ public class CustomerControllerTest {
                 .andDo(result -> {
                     Customer customers = Mapper.getData(result.getResponse().getContentAsString(), Customer.class);
                     Assertions.assertNotNull(customers);
-                    Assertions.assertEquals(customers.getName(),customers.getName());
+                    Assertions.assertEquals(customers.getId(),customer.getId());
                 })
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
@@ -102,7 +102,7 @@ public class CustomerControllerTest {
                 ).andDo(result -> {
                     Customer customers = Mapper.getData(result.getResponse().getContentAsString(), Customer.class);
                     Assertions.assertNotNull(customers);
-                    Assertions.assertEquals(customers.getName(),customers.getName());
+                    Assertions.assertEquals(customers.getName(),customer.getName());
                     deleteCustomer( customers.getId());
                 })
                 .andExpect(status().isCreated())

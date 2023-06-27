@@ -63,7 +63,6 @@ public class TransactionService extends GenericService <Transaction> {
             transaction.setDriverCost(totalDriverCost);
         }
 
-
         vehicle.setIsAvailable(true);
         rent.setIsCurrentlyRented(false);
         rent.setVehicle(vehicle);
@@ -74,7 +73,15 @@ public class TransactionService extends GenericService <Transaction> {
 
         return transactionRepository.save(transaction);
     }
+    public Transaction completePayment(Long id) {
+        Transaction transaction = this.findById(id);
+        if (transaction.getIsAlreadyPaid()) {
+            throw new RuntimeException("Pembayaran untuk transaksi ini telah selesai");
+        }
+        transaction.setIsAlreadyPaid(true);
 
+        return transactionRepository.save(transaction);
+    }
     public List<Transaction> findAllTransaction() {
         return transactionRepository.findAll();
     }

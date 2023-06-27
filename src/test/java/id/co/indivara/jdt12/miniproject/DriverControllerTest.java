@@ -56,7 +56,7 @@ public class DriverControllerTest {
                 .andDo(result -> {
                     Driver drivers = Mapper.getData(result.getResponse().getContentAsString(), Driver.class);
                     Assertions.assertNotNull(driver);
-                    Assertions.assertEquals(driver.getName(),driver.getName());
+                    Assertions.assertEquals(drivers.getId(),driver.getId());
                 })
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
@@ -74,7 +74,7 @@ public class DriverControllerTest {
                 .andDo(result -> {
                     Driver drivers = Mapper.getData(result.getResponse().getContentAsString(), Driver.class);
                     Assertions.assertNotNull(drivers);
-                    Assertions.assertEquals(drivers.getName(),drivers.getName());
+                    Assertions.assertEquals(drivers.getId(),drivers.getId());
                 })
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())

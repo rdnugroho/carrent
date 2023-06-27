@@ -43,7 +43,7 @@ public class VehicleControllerTest {
         ).andDo(result -> {
             List<Vehicle> vehicles = Mapper.getAllData(result.getResponse().getContentAsString(), Vehicle.class);
             Assertions.assertNotNull(vehicles);
-            Assertions.assertEquals(vehicleCheck.get(0).getName(), vehicles.get(0).getName());
+            Assertions.assertEquals(vehicleCheck.get(0).getId(), vehicles.get(0).getId());
         }).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNotEmpty());
@@ -57,7 +57,7 @@ public class VehicleControllerTest {
                 .andDo(result -> {
                     Vehicle vehicles = Mapper.getData(result.getResponse().getContentAsString(), Vehicle.class);
                     Assertions.assertNotNull(vehicles);
-                    Assertions.assertEquals(vehicle.getName(),vehicles.getName());
+                    Assertions.assertEquals(vehicle.getId(),vehicles.getId());
                 })
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
@@ -75,7 +75,7 @@ public class VehicleControllerTest {
                 .andDo(result -> {
                     Vehicle vehicles = Mapper.getData(result.getResponse().getContentAsString(), Vehicle.class);
                     Assertions.assertNotNull(vehicles);
-                    Assertions.assertEquals(vehicles.getName(),vehicle.getName());
+                    Assertions.assertEquals(vehicles.getId(),vehicle.getId());
                 })
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
@@ -101,7 +101,7 @@ public class VehicleControllerTest {
         ).andDo(result -> {
                     Vehicle vehicles = Mapper.getData(result.getResponse().getContentAsString(), Vehicle.class);
                     Assertions.assertNotNull(vehicles);
-                    Assertions.assertEquals(vehicles.getName(),vehicle.getName());
+                    Assertions.assertEquals(vehicles.getId(),vehicle.getId());
                     deleteVehicle(vehicles.getId());
                 })
                 .andExpect(status().isCreated())
